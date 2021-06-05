@@ -8,20 +8,6 @@
     <link rel="stylesheet" href="../../Public/css/tailwind.css">
 </head>
 <body>
-
-<?php 
-
-if (isset($_GET['pesan'])) {
-  if($_GET['pesan'] == 'gagal'){
-    echo "Username atau password salah";
-  }else if($_GET['pesan'] == 'belum_login'){
-    echo "Kamu Belum Login";
-  }else if($_GET['pesan'] == 'berhasil'){
-    echo "Akun telah di-Registrasi,Silakan Login Kembali";
-  }
-}
-?>
-
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <div>
@@ -32,6 +18,30 @@ if (isset($_GET['pesan'])) {
     </div>
     <form class="mt-8 space-y-6" action="auth-proses.php?aksi=login" method="POST">
       <div class="rounded-md shadow-sm -space-y-px">
+      <?php 
+
+                if (isset($_GET['pesan'])) {
+
+      ?>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
+          <strong class="font-bold">Oops !</strong>
+          <span class="block sm:inline">
+            <?php 
+            
+            if($_GET['pesan'] == 'gagal'){
+              echo "Username atau Password Salah";
+            }else if($_GET['pesan'] == 'belum_login'){
+              echo "Kamu Belum Login";
+            }else if($_GET['pesan'] == 'berhasil'){
+              echo "Akun telah di-Registrasi,Silakan Login Kembali";
+            }
+
+            ?>
+          </span>
+        </div>
+        <?php
+                }
+        ?>
         <div>
           <label for="username-address" class="sr-only">Username</label>
           <input id="username-address" name="username" type="username" autocomplete="username" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username">
