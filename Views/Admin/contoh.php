@@ -16,6 +16,5 @@
     <h1>Selamat Datang <?php  echo $_SESSION['username']  ?></h1>
 
     <a href="../Auth/auth-proses.php?aksi=logout">Logout</a>
-    <a href="contoh.php">Pindah</a>
 </body>
 </html>
