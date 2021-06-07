@@ -32,8 +32,6 @@
               echo "Username atau Password Salah";
             }else if($_GET['pesan'] == 'belum_login'){
               echo "Kamu Belum Login";
-            }else if($_GET['pesan'] == 'berhasil'){
-              echo "Akun telah di-Registrasi,Silakan Login Kembali";
             }
 
             ?>
@@ -41,6 +39,26 @@
         </div>
         <?php
                 }
+        ?>
+        <?php 
+
+        if (isset($_GET['status'])) {
+
+        ?>
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-5" role="alert">
+            <strong class="font-bold">Bagus !</strong>
+              <span class="block sm:inline">
+                <?php 
+
+                  if($_GET['status'] == 'berhasil'){
+                  echo "Akun Telah Di-Registrasi,Silakan Login Kembali";
+                  }
+
+                ?>
+              </span>
+          </div>
+        <?php
+        }
         ?>
         <div>
           <label for="username-address" class="sr-only">Username</label>

@@ -15,7 +15,7 @@ class Auth extends Database{
         }else{
             $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"INSERT INTO admins VALUES ('','$username','$email','$password')");
         
-            header('location:login.php?pesan=berhasil');
+            header('location:login.php?status=berhasil');
         }
     }
     public function login($username,$password){
