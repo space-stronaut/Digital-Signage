@@ -17,5 +17,6 @@
     <h1>Selamat Datang <?php  echo $_SESSION['username']  ?></h1>
 
     <a href="../Auth/auth-proses.php?aksi=logout" class="text-blue-500 hover:text-blue-700 focus:text-blue-900">Logout</a>
+    <a href="Workers/worker.php" class="text-blue-500 hover:text-blue-700 focus:text-blue-900">Pegawai</a>
 </body>
 </html>
