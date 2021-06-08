@@ -44,7 +44,7 @@ class Worker extends Database{
         header("location:worker.php?status=updated");
     }
     public function search($nama){
-        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers WHERE nama LIKE %.'$nama'.%");
+        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers WHERE nama LIKE '%$nama%'");
 
         header("location:worker.php");
     }
