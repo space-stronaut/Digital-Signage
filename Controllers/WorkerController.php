@@ -3,8 +3,6 @@
 include "Controller.php";
 
 class Worker extends Database{
-    
-    
     public function index()
     {
         $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers ORDER BY golongan desc");
