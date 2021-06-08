@@ -35,11 +35,16 @@ class Worker extends Database{
     {
         mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"DELETE FROM workers WHERE id='$id'");
     
-        header('location:worker.php');
+        header('location:worker.php?status=delete');
     }
-    public function update($nama,$nip,$golongan,$jabatan,$bidang)
+    public function update($id,$nama,$nip,$golongan,$jabatan,$bidang)
     {
-        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"UPDATE workers SET id='', nip='$nip', nama='$nama', bidang='$bidang', jabatan='$jabatan', golongan='$golongan', agenda_id='' ");
+        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"UPDATE workers SET id='', nip='$nip', nama='$nama', bidang='$bidang', jabatan='$jabatan', golongan='$golongan', agenda_id='' WHERE id='$id'");
+
+        header("location:worker.php?status=updated");
+    }
+    public function search($nama){
+        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers WHERE nama LIKE %.'$nama'.%");
 
         header("location:worker.php");
     }
