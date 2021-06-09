@@ -27,7 +27,6 @@ class Worker extends Database{
 
             header("location:worker.php?status=true");
         }
-        
     }
     public function delete($id)
     {
@@ -41,9 +40,26 @@ class Worker extends Database{
 
         header("location:worker.php?status=updated");
     }
-    public function search($nama){
-        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers WHERE nama LIKE '%$nama%'");
+    public function search($nama)
+    {
+        $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers WHERE nama LIKE '%".$nama."%' ");
 
-        header("location:worker.php");
+        $cek = mysqli_num_rows($query);
+
+        if ($cek > 0) {
+            while($data = mysqli_fetch_array($query)){
+                $hasil[] = $data;
+            }
+    
+            return $hasil;
+        }else{
+            $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers ORDER BY golongan desc");
+
+            while($data = mysqli_fetch_array($query)){
+                $hasil[] = $data;
+            }
+    
+            return $hasil;
+        }
     }
 }

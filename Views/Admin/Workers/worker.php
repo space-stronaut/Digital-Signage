@@ -14,6 +14,14 @@
 		header("location:../../Auth/login.php?pesan=belum_login");
 	}
 ?>
+
+<div class="container mx-auto mt-5 flex">
+  <form action="worker-proses.php?aksi=cari" method="post">
+    <input type="text" name="cari" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 w-50 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Cari Pegawai" required>
+    <button type="submit" class="cursor-pointer group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cari</button>
+  </form>
+</div>
+
 <!-- 
 <div class="container mx-auto ">
 <div class="mx-auto mt-5" style="width: 25rem;">
@@ -113,6 +121,23 @@
             }
 
         ?>
+<?php 
+
+        }else if (isset($_GET['hasil'])) {
+
+        ?>
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-5" role="alert">
+              <span class="block sm:inline">
+                <?php 
+
+                $hasil = $_GET['hasil'];
+
+                  echo "Hasil Pencarian Untuk : <b>$hasil</b>";
+
+                ?>
+              </span>
+          </div>
+        
         <?php
         }
         ?>
@@ -145,8 +170,47 @@
           
             $workers = new Worker();
 
+            if (isset($_GET['hasil'])) {
+                foreach($workers->search($_GET['hasil']) as $worker) {
+          ?>
+                <tr>
+              <td class="px-6 py-4 whitespace-wrap">
+                <div class="flex items-center">
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">
+                      <?php echo $worker['nama'] ?>
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        <b>Jabatan</b> : <?php echo $worker['jabatan'] ?>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900"><?php echo $worker['nip'] ?></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <?php echo $worker['golongan'] ?>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <?php echo $worker['bidang'] ?>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex">
+                <a href="worker-proses.php?id=<?php echo $worker['id'] ?>" class="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-900">Edit</a>
+                <form action="worker-proses.php?aksi=hapus" method="post">
+                    <input type="hidden" name="id" value="<?php echo $worker['id'] ?>">
+                    <input type="submit" value="Hapus" class="bg-red-600 cursor-pointer text-white ml-5 px-3 py-2 rounded-md text-sm font-medium hover:bg-red-900">
+                </form>
+              </td>
+            </tr>
+            
+                
 
-            foreach($workers->index() as $worker) {
+          <?php
+                }
+              }else{
+                foreach($workers->index() as $worker){
+
           ?>
             <tr>
               <td class="px-6 py-4 whitespace-wrap">
@@ -171,14 +235,18 @@
                 <?php echo $worker['bidang'] ?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex">
-                <a href="#" class="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-900">Edit</a>
+                <a href="worker-proses.php?id=<?php echo $worker['id'] ?>" class="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-900">Edit</a>
                 <form action="worker-proses.php?aksi=hapus" method="post">
                     <input type="hidden" name="id" value="<?php echo $worker['id'] ?>">
                     <input type="submit" value="Hapus" class="bg-red-600 cursor-pointer text-white ml-5 px-3 py-2 rounded-md text-sm font-medium hover:bg-red-900">
                 </form>
               </td>
             </tr>
-            <?php } ?>
+          <?php
+
+                }
+              }
+          ?>
             <!-- More people... -->
           </tbody>
         </table>
