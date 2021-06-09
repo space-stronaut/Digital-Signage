@@ -44,22 +44,24 @@ class Worker extends Database{
     {
         $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers WHERE nama LIKE '%".$nama."%' ");
 
-        $cek = mysqli_num_rows($query);
+        // $cek = mysqli_num_rows($query);
 
-        if ($cek > 0) {
-            while($data = mysqli_fetch_array($query)){
-                $hasil[] = $data;
-            }
+        // if ($cek > 0) {
+        //     while($data = mysqli_fetch_array($query)){
+        //         $hasil[] = $data;
+        //     }
     
-            return $hasil;
-        }else{
-            $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers ORDER BY golongan desc");
+        //     return $hasil;
+        // }else{
+        //     $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers ORDER BY golongan desc");
 
-            while($data = mysqli_fetch_array($query)){
-                $hasil[] = $data;
-            }
-    
-            return $hasil;
-        }
+        //     while($data = mysqli_fetch_array($query)){
+        //         $hasil[] = $data;
+        //     }
+
+        //     return $hasil;
+        // }
+
+        return $query;
     }
 }

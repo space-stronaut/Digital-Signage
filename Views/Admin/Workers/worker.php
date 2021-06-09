@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start();include "../../../Controllers/WorkerController.php";  $workers = new Worker();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,7 +124,7 @@
 <?php 
 
         }else if (isset($_GET['hasil'])) {
-
+          if (mysqli_num_rows($workers->search($_GET['hasil'])) > 0 ) {
         ?>
           <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-5" role="alert">
               <span class="block sm:inline">
@@ -139,6 +139,23 @@
           </div>
         
         <?php
+          }else{
+
+        ?>
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
+              <span class="block sm:inline">
+                <?php 
+
+                $hasil = $_GET['hasil'];
+
+                  echo "Hasil Pencarian Untuk : <b>$hasil</b>, Tidak Ditemukan";
+
+                ?>
+              </span>
+          </div>
+        <?php
+
+          }
         }
         ?>
 <div class="flex flex-col mt-5">
@@ -166,7 +183,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-          <?php include "../../../Controllers/WorkerController.php"; 
+          <?php 
           
             $workers = new Worker();
 
