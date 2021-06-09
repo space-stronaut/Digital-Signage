@@ -1,4 +1,8 @@
-<?php session_start();include "../../../Controllers/WorkerController.php";  $workers = new Worker();?>
+<?php session_start();
+
+include "../../../Controllers/WorkerController.php";  
+
+$workers = new Worker();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,14 +90,10 @@
 <div class="container mx-auto">
 <?php 
 
-        if (isset($_GET['status'])) {
-
-        ?>
-
-        <?php 
+        if (isset($_GET['status'])) { 
             if($_GET['status'] == 'true'){
         ?>
-          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-5" role="alert">
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative my-5" role="alert">
             <strong class="font-bold">Bagus !</strong>
               <span class="block sm:inline">
                 <?php 
@@ -106,7 +106,7 @@
         <?php 
             }elseif($_GET['status'] == 'false'){
         ?>
-          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-5" role="alert">
             <strong class="font-bold">Oops !</strong>
               <span class="block sm:inline">
                 <?php 
@@ -119,14 +119,10 @@
         <?php 
         
             }
-
-        ?>
-<?php 
-
         }else if (isset($_GET['hasil'])) {
           if (mysqli_num_rows($workers->search($_GET['hasil'])) > 0 ) {
         ?>
-          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-5" role="alert">
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative my-5" role="alert">
               <span class="block sm:inline">
                 <?php 
 
@@ -142,7 +138,7 @@
           }else{
 
         ?>
-          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-5" role="alert">
               <span class="block sm:inline">
                 <?php 
 
@@ -184,9 +180,6 @@
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
           <?php 
-          
-            $workers = new Worker();
-
             if (isset($_GET['hasil'])) {
                 foreach($workers->search($_GET['hasil']) as $worker) {
           ?>
