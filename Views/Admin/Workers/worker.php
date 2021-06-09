@@ -258,18 +258,12 @@
 
     <a href="../../Auth/auth-proses.php?aksi=logout" class="text-blue-500 hover:text-blue-700 focus:text-blue-900">Logout</a>
 
-
+<script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
 <script>
 
-    var key = document.querySelector('#nipinput');
-
-    key.addEventListener('keydown',function(e){
-        var code = e.key;
-
-        if(e.value == 8){
-          code = "-";
-        }
-    })
+  $(document).ready(function () {
+    console.log("jquery ready")
+  });
 
 </script>
 
