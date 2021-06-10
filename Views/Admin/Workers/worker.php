@@ -26,33 +26,33 @@ $workers = new Worker();?>
   </form>
 </div>
 
-<!-- 
+
 <div class="container mx-auto ">
 <div class="mx-auto mt-5" style="width: 25rem;">
-  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="worker-proses.php?aksi=buat" method="post">
+  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" enctype="multipart/form-data" action="worker-proses.php?aksi=buat" method="post">
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
         Nama Lengkap
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-700" name="nama" id="nip" type="text" placeholder="Nama Lengkap">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-700" name="nama" id="nip" type="text" placeholder="Nama Lengkap" required>
     </div>
     <div class="mb-6">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
         NIP
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="nipinput"  type="tel" name="nip" placeholder="NIP">
+      <input pattern="[0-9-]{21}" maxlength="21" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="nipinput" required  type="tel" name="nip" placeholder="NIP">
     </div>
     <div class="mb-6">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
         Jabatan
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="password" type="text" name="jabatan" placeholder="Jabatan">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="password" type="text" name="jabatan" required placeholder="Jabatan">
     </div>
     <div class="mb-6">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
         Golongan
       </label>
-      <select name="golongan" class="shadow appearance-none cursor-pointer border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="">
+      <select name="golongan" class="shadow appearance-none cursor-pointer border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="" required>
         <option value="" disabled selected>Pilih Golongan</option>
         <option value="IV A">IV A</option>
         <option value="IV B">IV B</option>
@@ -69,7 +69,7 @@ $workers = new Worker();?>
       <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
         Bidang
       </label>
-      <select name="bidang" class="shadow appearance-none cursor-pointer border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="">
+      <select name="bidang" class="shadow appearance-none cursor-pointer border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" id="" required>
         <option value="" disabled selected>Pilih Bidang</option>
         <option value="Sekretariat">Sekretariat</option>
         <option value="Pengelolaan Barang Milik Daerah">Pengelolaan Barang Milik Daerah</option>
@@ -78,6 +78,12 @@ $workers = new Worker();?>
         <option value="Perbendaharaan">Perbendaharaan</option>
       </select>
     </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Foto <small class="text-red-500">*optional</small>
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-700" type="file" name="foto" >
+    </div>
     <div class="flex items-center justify-between">
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
         Submit
@@ -85,7 +91,7 @@ $workers = new Worker();?>
     </div>
   </form>
 </div>
-</div> -->
+</div>
 
 <div class="container mx-auto">
 <?php 
@@ -94,7 +100,7 @@ $workers = new Worker();?>
             if($_GET['status'] == 'true'){
         ?>
           <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative my-5" role="alert">
-            <strong class="font-bold">Bagus !</strong>
+            <strong class="font-bold">Edann !</strong>
               <span class="block sm:inline">
                 <?php 
 
@@ -118,6 +124,19 @@ $workers = new Worker();?>
           </div>
         <?php 
         
+            }elseif($_GET['status'] == 'delete'){
+              ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-5" role="alert">
+                  <strong class="font-bold">Edann !</strong>
+                    <span class="block sm:inline">
+                      <?php 
+      
+                        echo "Data Berhasil Dihapus";
+      
+                      ?>
+                    </span>
+                </div>
+        <?php
             }
         }else if (isset($_GET['hasil'])) {
           if (mysqli_num_rows($workers->search($_GET['hasil'])) > 0 ) {
@@ -174,6 +193,9 @@ $workers = new Worker();?>
                 Bidang
               </th>
               <th scope="col" class="px-6 py-3 text-white text-left text-xs font-medium uppercase tracking-wider">
+                Foto
+              </th>
+              <th scope="col" class="px-6 py-3 text-white text-left text-xs font-medium uppercase tracking-wider">
                 Aksi
               </th>
             </tr>
@@ -204,6 +226,9 @@ $workers = new Worker();?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 <?php echo $worker['bidang'] ?>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <img src="../../../Public/img/1912099607_carbon(8).png" style="max-width: 100%;">
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex">
                 <a href="worker-proses.php?id=<?php echo $worker['id'] ?>" class="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-900">Edit</a>
@@ -244,6 +269,9 @@ $workers = new Worker();?>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 <?php echo $worker['bidang'] ?>
               </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <img src="../../../Public/img/<?php echo $worker['foto'] ?>" style="max-width: 100%;">
+              </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex">
                 <a href="worker-proses.php?id=<?php echo $worker['id'] ?>" class="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-900">Edit</a>
                 <form action="worker-proses.php?aksi=hapus" method="post">
@@ -271,10 +299,41 @@ $workers = new Worker();?>
 <script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
 <script>
 
-  $(document).ready(function () {
-    console.log("jquery ready")
-  });
+// $(function () {
+          
+//           $('#txtnumber').keydown(function (e) {
+//               var key = e.charCode || e.keyCode || 0;
+//               $text = $(this);
+//               if ( key !== 8 && key !== 15 && key !== 17) {
+//                   if ($text.val().length === 8) {
+//                       $text.val($text.val() + '-');
+//                   }
+//                   if ($text.val().length === 15) {
+//                       $text.val($text.val() + '-');
+//                   }
+//                   if ($text.val().length === 17) {
+//                       $text.val($text.val() + '-');
+//                   }
+//               }
+//             });
 
+$(document).ready(function(){
+  $('#nipinput').keydown(function(e){
+    var key = e.charCode || e.keyCode || 0;
+    $text = $(this);
+      if (key !== 8 && key !== 15 && key !== 17) {
+        if ($text.val().length === 8) {
+            $text.val($text.val() + '-');
+        }
+        if ($text.val().length === 15) {
+            $text.val($text.val() + '-');
+        }
+        if ($text.val().length === 17) {
+            $text.val($text.val() + '-');
+        }
+      }
+  })
+})
 </script>
 
 </body>
