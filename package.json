@@ -2,9 +2,9 @@
   "dependencies": {
     "aos": "^2.3.4",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.1",
     "datatables.net": "^1.10.25",
     "datatables.net-bs4": "^1.10.25",
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "tailwindcss": "^2.1.4"
   }
 }

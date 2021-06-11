@@ -7,11 +7,7 @@ class Worker extends Database{
     {
         $query = mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"SELECT * FROM workers ORDER BY golongan desc");
 
-        while($data = mysqli_fetch_array($query)){
-            $hasil[] = $data;
-        }
-
-        return $hasil;
+        return $query;
     }
 
     public function create($nama,$nip,$golongan,$jabatan,$bidang,$foto)
@@ -47,8 +43,7 @@ class Worker extends Database{
     }
     public function update($id,$nama,$nip,$golongan,$jabatan,$bidang)
     {
-
-        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"UPDATE workers SET id='', nip='$nip', nama='$nama', bidang='$bidang', jabatan='$jabatan', golongan='$golongan' WHERE id='$id'");
+        mysqli_query(mysqli_connect($this->host,$this->username,$this->password,$this->db),"UPDATE workers SET nip='$nip', nama='$nama', bidang='$bidang', jabatan='$jabatan', golongan='$golongan' WHERE id='$id'");
 
         header("location:worker.php?status=updated");
     }

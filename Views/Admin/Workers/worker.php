@@ -11,6 +11,7 @@ $workers = new Worker();?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | <?php echo  $_SESSION['username']?></title>
     <link rel="stylesheet" href="../../../Public/css/tailwind.css">
+	
 </head>
 <body>
 <?php 
@@ -19,16 +20,37 @@ $workers = new Worker();?>
 	}
 ?>
 
-<div class="container mx-auto mt-5 flex">
-  <form action="worker-proses.php?aksi=cari" method="post">
-    <input type="text" name="cari" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 w-50 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Cari Pegawai" required>
-    <button type="submit" class="cursor-pointer group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cari</button>
-  </form>
-</div>
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" id="modal-open">Tambah Data</button>
 
+<div class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" id="modal-form" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen text-center sm:block sm:p-0">
+    <!--
+      Background overlay, show/hide based on modal state.
 
-<div class="container mx-auto ">
-<div class="mx-auto mt-5" style="width: 25rem;">
+      Entering: "ease-out duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+    <!-- This element is to trick the browser into centering the modal contents. -->
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+    <!--
+      Modal panel, show/hide based on modal state.
+
+      Entering: "ease-out duration-300"
+        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        To: "opacity-100 translate-y-0 sm:scale-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100 translate-y-0 sm:scale-100"
+        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    -->
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div class="mx-auto mt-5" style="width: 25rem;">
   <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" enctype="multipart/form-data" action="worker-proses.php?aksi=buat" method="post">
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
@@ -88,9 +110,23 @@ $workers = new Worker();?>
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
         Submit
       </button>
+	  <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" id="cancel-form">
+          Close
+        </button>
     </div>
   </form>
 </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto mt-5 flex">
+  <form action="worker-proses.php?aksi=cari" method="post">
+    <input type="text" name="cari" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 w-50 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Cari Pegawai" required>
+    <button type="submit" class="cursor-pointer group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cari</button>
+  </form>
 </div>
 
 <div class="container mx-auto">
@@ -228,10 +264,10 @@ $workers = new Worker();?>
                 <?php echo $worker['bidang'] ?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <img src="../../../Public/img/1912099607_carbon(8).png" style="max-width: 100%;">
+                <img src="../../../Public/img/<?php $worker['foto'] ?>" style="max-width: 100%;">
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex">
-                <a href="worker-proses.php?id=<?php echo $worker['id'] ?>" class="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-900">Edit</a>
+                <a href="worker-proses.php?aksi=edit" class="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-900">Edit</a>
                 <form action="worker-proses.php?aksi=hapus" method="post">
                     <input type="hidden" name="id" value="<?php echo $worker['id'] ?>">
                     <input type="submit" value="Hapus" class="bg-red-600 cursor-pointer text-white ml-5 px-3 py-2 rounded-md text-sm font-medium hover:bg-red-900">
@@ -321,7 +357,6 @@ $(document).ready(function(){
   $('#nipinput').keydown(function(e){
     var key = e.charCode || e.keyCode || 0;
     $text = $(this);
-      if (key !== 8 && key !== 15 && key !== 17) {
         if ($text.val().length === 8) {
             $text.val($text.val() + '-');
         }
@@ -331,8 +366,19 @@ $(document).ready(function(){
         if ($text.val().length === 17) {
             $text.val($text.val() + '-');
         }
-      }
   })
+
+	
+	
+	$("#modal-open").click(function(){
+		$("#modal-form").removeClass("hidden")
+	})
+	
+	$("#cancel-form").click(function(){
+		$("#modal-form").addClass("hidden")
+	})
+
+
 })
 </script>
 
